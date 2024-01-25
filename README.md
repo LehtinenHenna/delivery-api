@@ -3,24 +3,16 @@
 
 # Installation
 
-If you're on Linux or Mac, run the following command in a terminal:
+To install dependencies, run the following command in a terminal:
 
 ```
 pip3 install -r requirements.txt
 ```
-Alternatively, if you're on Windows, run the following command:
-```
-pip install -r requirements.txt
-```
 
 # Running the application
-To start the server, run the following command if you're on Linux or Mac:
+To start the server, run the following commandc:
 ```
-python3 app.py
-```
-Or alternatively, run the following command if you're on Windows:
-```
-python app.py
+python3 main.py
 ```
 
 # End points
@@ -69,11 +61,11 @@ python app.py
 
 # Testing
 
-To run the automated tests, run the following command:
+To start the automated tests, run the following command while in the root folder (delivery-api) of the project:
 ```
-pytest
+python3 -m pytest tests
 ```
-To send a post request manually, you can use the curl command with the --json option. For example:
+To send a post request manually while the Flask server is running, you can use the curl command with the --json option. For example:
 ```
 curl --json '{"cart_value": 790, "delivery_distance": 2235, "number_of_items": 4, "time": "2024-01-15T13:00:00Z"}'  http://localhost:5000/delivery-fee
 ```
