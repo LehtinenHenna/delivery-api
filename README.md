@@ -1,5 +1,6 @@
 # Delivery API
 
+This program is an API application for a delivery service.
 
 # Installation
 
@@ -21,13 +22,19 @@ python3 main.py
 
 - HTTP verb: POST
 - Description: Calculates a delivery fee based on the given input parameters
-- Request payload: JSON containing delivery parameters
-    - for example: {"cart_value": 790, "delivery_distance": 2235, "number_of_items": 4, "time": "2024-01-15T13:00:00Z"}
-- Response payload: JSON containing calculated delivery fee
-    - for example: {"delivery_fee": 10}
 - URL: http://localhost:5000/delivery-fee
 
-### Request field details
+### Request
+
+JSON containing delivery parameters
+
+#### Example
+
+```
+{"cart_value": 790, "delivery_distance": 2235, "number_of_items": 4, "time": "2024-01-15T13:00:00Z"}
+```
+
+#### Field details
 
 | Field             | Type    | Description                                                       | Example value                        |
 |-------------------|---------|-------------------------------------------------------------------|--------------------------------------|
@@ -36,7 +43,17 @@ python3 main.py
 | number_of_items   | Integer | The number of items in the customer's shopping cart.              | 4 (customer has 4 items in the cart) |
 | time              | String  | Order time in UTC in ISO format.                                  | 2024-01-15T13:00:00Z                 |
 
-### Response field details
+### Response
+
+JSON containing calculated delivery fee
+
+#### Example
+
+```
+{"delivery_fee": 710}
+```
+
+#### Field details
 
 | Field        | Type    | Description             | Example value              |
 |--------------|---------|-------------------------|----------------------------|
