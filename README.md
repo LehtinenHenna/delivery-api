@@ -69,3 +69,16 @@ To send a post request manually while the Flask server is running, you can use t
 ```
 curl --json '{"cart_value": 790, "delivery_distance": 2235, "number_of_items": 4, "time": "2024-01-15T13:00:00Z"}'  http://localhost:5000/delivery-fee
 ```
+
+# Development
+
+## Updating requirements.txt
+
+Install pipreqs if you don't have it in your system:
+```
+pip3 install pipreqs
+```
+Then run the following command to update requirements.txt:
+```
+pipreqs --force
+```
