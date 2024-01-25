@@ -57,7 +57,7 @@ class DeliveryFeeResource(Resource):
         time_as_datetime = parser.parse(time)
         day_of_the_week = datetime.weekday(time_as_datetime)
         if day_of_the_week == self.time_rush_weekday:
-            if self.time_rush_start_hour < time_as_datetime.time() < self.time_rush_end_hour:
+            if self.time_rush_start_hour <= time_as_datetime.time() <= self.time_rush_end_hour:
                 delivery_fee *= self.time_rush_multiplier
         return delivery_fee
     
