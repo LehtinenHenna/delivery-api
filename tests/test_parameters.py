@@ -1,15 +1,10 @@
 from http import HTTPStatus
-free_delivery_limit = 200
-cart_value_surcharge_limit = 1000
-number_of_items_surcharge_limit_inclusive = 5
-delivery_distance_start_meters = 1000
-delivery_distance_start_fee = 200
-delivery_distance_additional_meters = 500
-delivery_distance_additional_fee = 100
-# first element of each tuple: request_json parameter
-# second element of each tuple: expected_response parameter
-# third element of each tuple: expected_http_status
+
 delivery_fee_post_parameters = [
+    # first element of each tuple: request_json parameter
+    # second element of each tuple: expected_response parameter
+    # third element of each tuple: expected_http_status
+    
     ( # test cart_value surcharge
         {
             "cart_value": 790, # 10€ - 7.9€ = 2.1€ surcharge
@@ -25,7 +20,13 @@ delivery_fee_post_parameters = [
     ( # test empty request
         {},
         {
-            "message": "Invalid request"
+            'message': 'Validation errors', 
+            'errors': {
+                'cart_value': ['Missing data for required field.'], 
+                'delivery_distance': ['Missing data for required field.'], 
+                'number_of_items': ['Missing data for required field.'], 
+                'time': ['Missing data for required field.']
+            }
         },
         HTTPStatus.BAD_REQUEST
     ),
@@ -37,7 +38,7 @@ delivery_fee_post_parameters = [
             "time": "2024-01-15T13:00:00Z" # 0€ surcharge
         },
         {
-            "message": "Invalid request"
+            'message': 'Validation errors', 'errors': {'delivery_distance': ['Not a valid integer.']}
         },
         HTTPStatus.BAD_REQUEST
     ),
@@ -149,7 +150,19 @@ delivery_fee_post_parameters = [
         },
         HTTPStatus.OK
     ),
-    ( # test with cart value hitting the free delivery limit
+    ( # test with cart value hitting the free delivery limit without Friday rush
+        {
+            "cart_value": 20000, # 0€ surcharge
+            "delivery_distance": 3000, # 2€ + 4€ = 6€
+            "number_of_items": 13, # 9 * 0.50€ + 1.20€ = 5.70€ surcharge
+            "time": "2024-01-20T15:10:00Z" # 0€ surcharge
+        },
+        {
+            "delivery_fee": 0 # cart >= 200€, delivery free of charge
+        },
+        HTTPStatus.OK
+    ),
+    ( # test with cart value hitting the free delivery limit with Friday rush
         {
             "cart_value": 20000, # 0€ surcharge
             "delivery_distance": 3000, # 2€ + 4€ = 6€
