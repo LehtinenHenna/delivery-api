@@ -3,16 +3,23 @@ from flask_restful import Api
 from resources.delivery_fee import DeliveryFeeResource
 
 class DeliveryApi:
+    '''Creates a Flask server.'''
 
     def __init__(self):
+        '''Initializes the Flask server.'''
+
         self.app = Flask(__name__)
         self.api = Api(self.app)
         self.register_resources()
 
     def register_resources(self):
+        '''Adds HTTP endpoints to the API.'''
+
         self.api.add_resource(DeliveryFeeResource, '/delivery-fee')
 
     def run(self):
+        '''Runs the Flask server.'''
+
         self.app.run(debug=True)
     
 if __name__ == '__main__':
