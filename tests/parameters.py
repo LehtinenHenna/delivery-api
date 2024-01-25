@@ -3,7 +3,7 @@ from http import HTTPStatus
 delivery_fee_post_parameters = [
     # first element of each tuple: request_json parameter
     # second element of each tuple: expected_response parameter
-    # third element of each tuple: expected_http_status
+    # third element of each tuple: expected_http_status parameter
     
     ( # test cart_value surcharge
         {
@@ -123,6 +123,54 @@ delivery_fee_post_parameters = [
         },
         {
             "delivery_fee": 240
+        },
+        HTTPStatus.OK
+    ),
+    ( # test Friday rush start
+        {
+            "cart_value": 1000, # 0€ surcharge
+            "delivery_distance": 1000, # 2€
+            "number_of_items": 4, # 0€ surcharge
+            "time": "2024-01-19T15:00:00Z" # multiply fee by 1.2
+        },
+        {
+            "delivery_fee": 240
+        },
+        HTTPStatus.OK
+    ),
+    ( # test Friday rush end
+        {
+            "cart_value": 1000, # 0€ surcharge
+            "delivery_distance": 1000, # 2€
+            "number_of_items": 4, # 0€ surcharge
+            "time": "2024-01-19T19:00:00Z" # multiply fee by 1.2
+        },
+        {
+            "delivery_fee": 240
+        },
+        HTTPStatus.OK
+    ),
+    ( # test time just before Friday rush
+        {
+            "cart_value": 1000, # 0€ surcharge
+            "delivery_distance": 1000, # 2€
+            "number_of_items": 4, # 0€ surcharge
+            "time": "2024-01-19T14:59:59Z" # 0€ surcharge
+        },
+        {
+            "delivery_fee": 200
+        },
+        HTTPStatus.OK
+    ),
+    ( # test time just after Friday rush
+        {
+            "cart_value": 1000, # 0€ surcharge
+            "delivery_distance": 1000, # 2€
+            "number_of_items": 4, # 0€ surcharge
+            "time": "2024-01-19T19:01:00Z" # 0€ surcharge
+        },
+        {
+            "delivery_fee": 200
         },
         HTTPStatus.OK
     ),
