@@ -98,11 +98,35 @@ delivery_fee_post_test_parameters = [
         {
             "cart_value": 1000, # 0€ surcharge
             "delivery_distance": 1000, # 2€
-            "number_of_items": 6, # 2 * 0.50€ = 1€ surcharge
+            "number_of_items": 5, # 1 * 0.50€ = 0.50€ surcharge
             "time": "2024-01-15T13:00:00Z" # 0€ surcharge
         },
         {
-            "delivery_fee": 300
+            "delivery_fee": 250
+        },
+        HTTPStatus.OK
+    ),
+    ( # test number_of_items surcharge
+        {
+            "cart_value": 1000, # 0€ surcharge
+            "delivery_distance": 1000, # 2€
+            "number_of_items": 8, # 4 * 0.50€ = 2€ surcharge
+            "time": "2024-01-15T13:00:00Z" # 0€ surcharge
+        },
+        {
+            "delivery_fee": 400
+        },
+        HTTPStatus.OK
+    ),
+    ( # test number_of_items surcharge without bulk fee
+        {
+            "cart_value": 1000, # 0€ surcharge
+            "delivery_distance": 1000, # 2€
+            "number_of_items": 12, # 8 * 0.50€ = 4€ surcharge
+            "time": "2024-01-15T13:00:00Z" # 0€ surcharge
+        },
+        {
+            "delivery_fee": 600
         },
         HTTPStatus.OK
     ),
