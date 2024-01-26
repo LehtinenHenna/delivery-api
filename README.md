@@ -10,6 +10,7 @@ To install dependencies, run the following command in a terminal:
 ```
 pip3 install -r requirements.txt
 ```
+Note: Python of version 3.11.6 has been used when developing and running this project.
 
 # Running the application
 To start the server in development mode, run the following command:
@@ -58,9 +59,9 @@ JSON containing calculated delivery fee
 
 #### Field details
 
-| Field        | Type    | Description             | Example value              |
-|--------------|---------|-------------------------|----------------------------|
-| delivery_fee | Integer | Calculated delivery fee | 1000 (1000 cents = 10.00€) |
+| Field        | Type    | Description                      | Example value              |
+|--------------|---------|----------------------------------|----------------------------|
+| delivery_fee | Integer | Calculated delivery fee in cents | 1000 (1000 cents = 10.00€) |
 
 ### Rules for calculating a delivery fee
 
