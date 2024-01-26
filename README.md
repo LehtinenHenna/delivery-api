@@ -112,3 +112,11 @@ Then run the following command to update requirements.txt:
 ```
 pipreqs --force
 ```
+
+# Author
+
+Henna Lehtinen
+
+henna.lehtinen91@gmail.com
+
+https://www.linkedin.com/in/henna-lehtinen/
