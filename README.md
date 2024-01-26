@@ -1,6 +1,7 @@
 # Delivery API
 
 This program is an API application for a delivery service.
+It is a Flask server which accepts HTTP requests, and it returns a response for each request.
 
 # Installation
 
@@ -11,17 +12,19 @@ pip3 install -r requirements.txt
 ```
 
 # Running the application
-To start the server, run the following commandc:
+To start the server in development mode, run the following command:
 ```
 python3 main.py
 ```
 
 # End points
 
+Currently there is only one end point, which is the post end point for calculating a delivery fee.
+
 ## Delivery fee POST end point
 
-- HTTP verb: POST
 - Description: Calculates a delivery fee based on the given input parameters
+- HTTP verb: POST
 - URL: http://localhost:5000/delivery-fee
 
 ### Request
@@ -75,16 +78,25 @@ JSON containing calculated delivery fee
 - The delivery is free (0€) when the cart value is equal or more than 200€.
 - During the Friday rush, 3 - 7 PM, the delivery fee (the total fee including possible surcharges) will be multiplied by 1.2x. However, the fee still cannot be more than the max (15€). Considering timezone, for simplicity, use UTC as a timezone in backend solutions (so Friday rush is 3 - 7 PM UTC). In frontend solutions, use the timezone of the browser (so Friday rush is 3 - 7 PM in the timezone of the browser).
 
+# Usage
+
+To use the program when it's up and running, you can send an HTTP request to one of the end points.
+Various tools can be used for this, like Postman, curl, or sending a request from a front end server.
+
+For example, to send a post request manually while the Flask server is running, you can use the curl command with the --json option. For example:
+{"cart_value": 1000, "delivery_distance": 1501, "number_of_items": 4, "time": "2024-01-15T13:00:00Z"}
+```
+curl --json '{"cart_value": 1000, "delivery_distance": 1501, "number_of_items": 4, "time": "2024-01-15T13:00:00Z"}'  http://localhost:5000/delivery-fee
+```
+As a response you will receive a JSON with the calculated delivery fee:
+{"delivery_fee": 400}
+![](curl-example.jpg)
 
 # Testing
 
 To start the automated tests, run the following command while in the root folder (delivery-api) of the project:
 ```
 python3 -m pytest tests
-```
-To send a post request manually while the Flask server is running, you can use the curl command with the --json option. For example:
-```
-curl --json '{"cart_value": 790, "delivery_distance": 2235, "number_of_items": 4, "time": "2024-01-15T13:00:00Z"}'  http://localhost:5000/delivery-fee
 ```
 
 # Development
