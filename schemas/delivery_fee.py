@@ -1,3 +1,8 @@
+'''Schemas for data validation.
+
+This module contains the class DeliveryFeeSchema 
+for validating JSON data.
+'''
 from marshmallow import Schema, fields
 
 class DeliveryFeeSchema(Schema):

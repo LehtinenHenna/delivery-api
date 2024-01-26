@@ -1,10 +1,12 @@
+''' This module contains parameters used for unit tests that utilize pytest.mark.parametrize.
+'''
 from http import HTTPStatus
 
-delivery_fee_post_parameters = [
+delivery_fee_post_test_parameters = [
     # first element of each tuple: request_json parameter
     # second element of each tuple: expected_response parameter
     # third element of each tuple: expected_http_status parameter
-    
+
     ( # test cart_value surcharge
         {
             "cart_value": 790, # 10€ - 7.9€ = 2.1€ surcharge
@@ -38,7 +40,9 @@ delivery_fee_post_parameters = [
             "time": "2024-01-15T13:00:00Z" # 0€ surcharge
         },
         {
-            'message': 'Validation errors', 'errors': {'delivery_distance': ['Not a valid integer.']}
+            'message': 'Validation errors', 'errors': {
+                'delivery_distance': ['Not a valid integer.']
+            }
         },
         HTTPStatus.BAD_REQUEST
     ),
@@ -181,8 +185,8 @@ delivery_fee_post_parameters = [
             "number_of_items": 13, # 9 * 0.50€ + 1.20€ = 5.70€ surcharge
             "time": "2024-01-19T15:10:00Z" # multiply fee by 1.2
         },
-        {
-            "delivery_fee": 1500 # 5€ + 6€ + 5.70€ = 16.70€. 16.70€ * 1.2 = 20.04. Max delivery fee 15€.
+        { # 5€ + 6€ + 5.70€ = 16.70€. 16.70€ * 1.2 = 20.04. Max delivery fee 15€.
+            "delivery_fee": 1500 
         },
         HTTPStatus.OK
     ),

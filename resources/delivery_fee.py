@@ -1,6 +1,11 @@
+'''HTTP endpoints related to delivery fee.
+
+Contains classes that inherit from flask_restful.Resource
+and define HTTP endpoints for URLs.
+'''
+from http import HTTPStatus
 from flask import request
 from flask_restful import Resource
-from http import HTTPStatus
 from marshmallow import ValidationError
 from schemas.delivery_fee import DeliveryFeeSchema
 from utils.delivery_fee_calculator import DeliveryFeeCalculator
@@ -41,8 +46,11 @@ class DeliveryFeeResource(Resource):
             # Validate the request data with marshmallow
             validated_request_dict = self.delivery_fee_schema.load(data=request_dict)
         except ValidationError as error:
-            return {'message': 'Validation errors', 'errors': error.messages_dict}, HTTPStatus.BAD_REQUEST 
-        
+            return {
+                'message': 'Validation errors', 'errors': error.messages_dict
+            }, HTTPStatus.BAD_REQUEST
+
         delivery_fee = self.delivery_fee_calculator.calculate_delivery_fee(validated_request_dict)
 
         return {'delivery_fee': int(delivery_fee)}, HTTPStatus.OK
+    

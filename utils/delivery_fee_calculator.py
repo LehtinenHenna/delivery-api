@@ -1,7 +1,11 @@
-from datetime import datetime, time
-from dateutil import parser
-from math import ceil
+'''Delivery fee calculator.
 
+This module contains the DeliveryFeeCalculator class, which
+contains logic to calculate a delivery fee based on delivery parameters.
+'''
+from datetime import datetime, time
+from math import ceil
+from dateutil import parser
 
 class DeliveryFeeCalculator:
     '''
@@ -85,7 +89,9 @@ class DeliveryFeeCalculator:
         self.time_rush_multiplier = 1.2
         self.max_delivery_fee = 1500
 
-    def add_delivery_distance_fee(self, delivery_fee: int | float, delivery_distance: int) -> int | float:
+    def add_delivery_distance_fee(
+            self, delivery_fee: int | float, delivery_distance: int
+    ) -> int | float:
         '''Adds fees related to delivery_distance to the delivery_fee.
         
         Adds a base fee for the set amount of starting meters of the delivery_distance.
@@ -98,11 +104,17 @@ class DeliveryFeeCalculator:
             delivery_distance -= self.delivery_distance_start_meters
         else:
             delivery_distance = 0
-        number_of_additional_distance_lengths = ceil(delivery_distance / self.delivery_distance_additional_length_meters)
-        delivery_fee += number_of_additional_distance_lengths * self.delivery_distance_additional_length_fee_cents
+        number_of_additional_lengths = ceil(
+            delivery_distance / self.delivery_distance_additional_length_meters
+        )
+        delivery_fee += (
+            number_of_additional_lengths * self.delivery_distance_additional_length_fee_cents
+        )
         return delivery_fee
 
-    def add_number_of_items_fee(self, delivery_fee: int | float, number_of_items: int) -> int | float:
+    def add_number_of_items_fee(
+            self, delivery_fee: int | float, number_of_items: int
+    ) -> int | float:
         '''Adds fees related to the number_of_items to the delivery_fee.
         
         If the number_of_items is greater than the surcharge limit,
@@ -117,7 +129,7 @@ class DeliveryFeeCalculator:
         if number_of_items > self.number_of_items_bulk_limit:
             delivery_fee += self.number_of_items_bulk_fee_cents
         return delivery_fee
-    
+
     def add_cart_value_fee(self, delivery_fee: int | float, cart_value: int) -> int | float:
         '''Adds fees related to the cart_value to the delivery_fee.
 
@@ -134,27 +146,27 @@ class DeliveryFeeCalculator:
             delivery_fee = 0
         return delivery_fee
 
-    def add_time_fee(self, delivery_fee: int | float, time: str) -> int | float:
+    def add_time_fee(self, delivery_fee: int | float, time_str: str) -> int | float:
         '''Adds fees related to time to the delivery_fee.
 
         If the ISO timestamp is within the set rush day and hours,
         the delivery_fee is multiplied with the set rush multiplier.
         '''
 
-        time_as_datetime = parser.parse(time)
+        time_as_datetime = parser.parse(time_str)
         day_of_the_week = datetime.weekday(time_as_datetime)
         if day_of_the_week == self.time_rush_weekday:
             if self.time_rush_start_hour <= time_as_datetime.time() <= self.time_rush_end_hour:
                 delivery_fee *= self.time_rush_multiplier
         return delivery_fee
-    
+
     def apply_max_delivery_fee(self, delivery_fee: int | float) -> int | float:
         '''Limits the delivery fee within the set maximum.'''
 
         if delivery_fee > self.max_delivery_fee:
             delivery_fee = self.max_delivery_fee
         return delivery_fee
-    
+
     def calculate_delivery_fee(self, parameters_dict: dict) -> int | float:
         '''Calculates delivery fee based on parameters in the parameters_dict.'''
 
@@ -175,3 +187,4 @@ class DeliveryFeeCalculator:
             else:
                 delivery_fee = function(delivery_fee)
         return delivery_fee
+    

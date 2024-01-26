@@ -1,3 +1,8 @@
+'''Flask server.
+
+This file contains the class DeliveryApi,
+which starts and runs a Flask server.
+'''
 from flask import Flask
 from flask_restful import Api
 from resources.delivery_fee import DeliveryFeeResource
@@ -21,7 +26,7 @@ class DeliveryApi:
         '''Runs the Flask server.'''
 
         self.app.run(debug=True)
-    
+
 if __name__ == '__main__':
     delivery_api = DeliveryApi()
     delivery_api.run()
