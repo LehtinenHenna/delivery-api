@@ -5,7 +5,6 @@ contains logic to calculate a delivery fee based on delivery parameters.
 '''
 from datetime import datetime, time
 from math import ceil
-from dateutil import parser
 
 class DeliveryFeeCalculator:
     '''
@@ -64,7 +63,7 @@ class DeliveryFeeCalculator:
         Calculates the surcharge for the number of items and adds it to delivery fee
     add_cart_value_fee(delivery_fee: int | float, cart_value: int)
         Calculates the surcharge of the cart value and adds it to delivery fee
-    add_time_fee(delivery_fee: int | float, time: str)
+    add_time_fee(delivery_fee: int | float, time: datetime)
         Calculates the rush hour surcharge and adds it to the delivery fee
     apply_max_delivery_fee(delivery_fee: int | float)
         Limits the delivery fee to a maximum delivery fee
@@ -146,14 +145,13 @@ class DeliveryFeeCalculator:
             delivery_fee = 0
         return delivery_fee
 
-    def add_time_fee(self, delivery_fee: int | float, time_str: str) -> int | float:
+    def add_time_fee(self, delivery_fee: int | float, time_as_datetime: datetime) -> int | float:
         '''Adds fees related to time to the delivery_fee.
 
-        If the ISO timestamp is within the set rush day and hours,
+        If the timestamp is within the set rush day and hours,
         the delivery_fee is multiplied with the set rush multiplier.
         '''
 
-        time_as_datetime = parser.parse(time_str)
         day_of_the_week = datetime.weekday(time_as_datetime)
         if day_of_the_week == self.time_rush_weekday:
             if self.time_rush_start_hour <= time_as_datetime.time() <= self.time_rush_end_hour:
