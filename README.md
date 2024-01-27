@@ -20,7 +20,7 @@ python3 main.py
 
 # End points
 
-Currently there is only one end point, which is the post end point for calculating a delivery fee.
+Currently there is only one end point, which is a post end point for calculating a delivery fee.
 
 ## Delivery fee POST end point
 
@@ -82,9 +82,9 @@ JSON containing calculated delivery fee
 # Usage
 
 To use the program when it's up and running, you can send an HTTP request to one of the end points.
-Various tools can be used for this, like Postman, curl, or sending a request from a front end server.
+Various tools can be used for this, like Postman or curl.
 
-For example, to send a post request manually while the Flask server is running, you can use the curl command with the --json option. For example:
+For example, to send a post request manually while the Flask server is running, you can use the curl command with the --json option to send the following request JSON:
 {"cart_value": 1000, "delivery_distance": 1501, "number_of_items": 4, "time": "2024-01-15T13:00:00Z"}
 ```
 curl --json '{"cart_value": 1000, "delivery_distance": 1501, "number_of_items": 4, "time": "2024-01-15T13:00:00Z"}'  http://localhost:5000/delivery-fee
