@@ -10,7 +10,7 @@ To install dependencies, run the following command in a terminal:
 ```
 pip3 install -r requirements.txt
 ```
-Note: Python of version 3.11.6 has been used when developing and running this project.
+Note: Python of version 3.10 or higher is required to run this program.
 
 # Running the application
 To start the server in development mode, run the following command:
