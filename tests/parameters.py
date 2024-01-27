@@ -46,6 +46,78 @@ delivery_fee_post_test_parameters = [
         },
         HTTPStatus.BAD_REQUEST
     ),
+    ( # test request containing negative numbers
+        {
+            "cart_value": -1, # negative number not allowed
+            "delivery_distance": -1000, # negative number not allowed
+            "number_of_items": -4, # negative number not allowed
+            "time": "2024-01-15T13:00:00Z" # 0€ surcharge
+        },
+        {
+            'message': 'Validation errors', 'errors': {
+                'cart_value': ['Value must be greater than 0.'],
+                'delivery_distance': ['Value must be greater than 0.'], 
+                'number_of_items': ['Value must be greater than 0.']
+            }
+        },
+        HTTPStatus.BAD_REQUEST
+    ),
+    ( # test time missing some of the timestamp data
+        {
+            "cart_value": 1000, # 0€ surcharge
+            "delivery_distance": 1000, # 2€
+            "number_of_items": 4, # 0€ surcharge
+            "time": "2024-01-15" # Invalid data
+        },
+        {
+            'message': 'Validation errors', 'errors': {
+                'time': ['Not a valid datetime.']
+            }
+        },
+        HTTPStatus.BAD_REQUEST
+    ),
+    ( # test time missing timezone
+        {
+            "cart_value": 1000, # 0€ surcharge
+            "delivery_distance": 1000, # 2€
+            "number_of_items": 4, # 0€ surcharge
+            "time": "2024-01-15T13:00:00" # invalid data
+        },
+        {
+            'message': 'Validation errors', 'errors': {
+                'time': ['Not a valid aware datetime.']
+            }
+        },
+        HTTPStatus.BAD_REQUEST
+    ),
+    ( # test time not being a valid ISO timestamp
+        {
+            "cart_value": 1000, # 0€ surcharge
+            "delivery_distance": 1000, # 2€
+            "number_of_items": 4, # 0€ surcharge
+            "time": "not valid time" # Invalid data
+        },
+        {
+            'message': 'Validation errors', 'errors': {
+                'time': ['Not a valid datetime.']
+            }
+        },
+        HTTPStatus.BAD_REQUEST
+    ),
+    ( # test time of wrong timezone
+        {
+            "cart_value": 1000, # 0€ surcharge
+            "delivery_distance": 1000, # 2€
+            "number_of_items": 4, # 0€ surcharge
+            "time": "2024-01-06T19:20:34+02:00" # Invalid timezone
+        },
+        {
+            'message': 'Validation errors', 'errors': {
+                'time': ['Not a valid datetime.']
+            }
+        },
+        HTTPStatus.BAD_REQUEST
+    ),
     ( # test delivery distance of less than 1000
         {
             "cart_value": 1000, # 0€ surcharge
