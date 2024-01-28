@@ -52,5 +52,5 @@ class DeliveryFeeResource(Resource):
 
         delivery_fee = self.delivery_fee_calculator.calculate_delivery_fee(validated_request_dict)
 
-        return {'delivery_fee': int(delivery_fee)}, HTTPStatus.OK
+        return {'delivery_fee': round(delivery_fee)}, HTTPStatus.OK
     
