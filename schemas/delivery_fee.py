@@ -24,7 +24,8 @@ class DeliveryFeeSchema(Schema):
         Validates that the field is given, and that it's of type int,
         and that the number is greater than zero.
     time: fields.AwareDateTime
-        Validates that the field is given, and that it's of type datetime.
+        Validates that the field is given, and that it can be converted to 
+        a timezone aware datetime object. time is returned as a datetime object.
     
     Methods
     -------

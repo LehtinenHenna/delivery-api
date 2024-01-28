@@ -37,7 +37,8 @@ class DeliveryFeeResource(Resource):
     def post(self):
         '''Calculates delivery fee based on parameters in the request.
 
-        Returns a JSON with the calculated delivery_fee.
+        Returns a JSON with the calculated delivery_fee or a JSON with 
+        a message containing error data.
         POST endpoint to URL /delivery-fee.
         '''
 

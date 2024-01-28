@@ -1,6 +1,6 @@
 '''Unit tests for the API.
 
-Contains unit test cases that test the functionality of the delivery api.
+Contains unit test cases that test the functionality of the delivery fee resource.
 The parameters for tests utilizing pytest.mark.parametrize can be found in file parameters.py.
 '''
 from http import HTTPStatus
@@ -29,5 +29,5 @@ def test_delivery_fee_nonexisting_endpoint():
         assert post_response_bad_endpoint.status_code == HTTPStatus.NOT_FOUND
         get_response_bad_endpoint = client.get('/bad-endpoint', json={})
         assert get_response_bad_endpoint.status_code == HTTPStatus.NOT_FOUND
-        get_response_right_endpoint = client.get('/delivery-fee', json={})
-        assert get_response_right_endpoint.status_code == HTTPStatus.METHOD_NOT_ALLOWED
+        get_response_right_endpoint_bad_method = client.get('/delivery-fee', json={})
+        assert get_response_right_endpoint_bad_method.status_code == HTTPStatus.METHOD_NOT_ALLOWED

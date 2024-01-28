@@ -8,7 +8,7 @@ from math import ceil
 
 class DeliveryFeeCalculator:
     '''
-    A class to calculate delivery free by applying fees based on given delivery parameters.
+    A class to calculate a delivery free by applying fees based on given delivery parameters.
     
     ...
 
@@ -41,7 +41,7 @@ class DeliveryFeeCalculator:
         lengths of delivery distance
     time_rush_weekday: int
         The weekday number when a rush fee is applied at certain hours.
-        It is comparable with the output of dateutil parser.
+        It is comparable with the output of datetime.weekday().
         Monday... Sunday = 0... 6.
     time_rush_start_hour: datetime.time
         The hour when the rush starts. After this time the 
@@ -58,17 +58,17 @@ class DeliveryFeeCalculator:
     Methods
     -------
     add_delivery_distance_fee(delivery_fee: int | float, delivery_distance: int)
-        Calculates the fee of delivery distance and adds it to delivery fee
+        Calculates the fee of delivery distance and adds it to delivery fee.
     add_number_of_items_fee(delivery_fee: int | float, number_of_items: int)
-        Calculates the surcharge for the number of items and adds it to delivery fee
+        Calculates the surcharge for the number of items and adds it to delivery fee.
     add_cart_value_fee(delivery_fee: int | float, cart_value: int)
-        Calculates the surcharge of the cart value and adds it to delivery fee
+        Calculates the surcharge of the cart value and adds it to delivery fee.
     add_time_fee(delivery_fee: int | float, time: datetime)
-        Calculates the rush hour surcharge and adds it to the delivery fee
+        Calculates the rush hour surcharge and adds it to the delivery fee.
     apply_max_delivery_fee(delivery_fee: int | float)
-        Limits the delivery fee to a maximum delivery fee
+        Limits the delivery fee to a maximum delivery fee.
     calculate_delivery_fee(parameters_dict: dict)
-        Uses the other methods to apply fees to get the total delivery fee
+        Uses the other methods to apply fees to get the total delivery fee.
     '''
 
     def __init__(self):
@@ -148,8 +148,8 @@ class DeliveryFeeCalculator:
     def add_time_fee(self, delivery_fee: int | float, time_as_datetime: datetime) -> int | float:
         '''Adds fees related to time to the delivery_fee.
 
-        If the timestamp is within the set rush day and hours,
-        the delivery_fee is multiplied with the set rush multiplier.
+        If the timestamp is within the rush day and hours,
+        the delivery_fee is multiplied with the rush multiplier.
         '''
 
         day_of_the_week = datetime.weekday(time_as_datetime)
@@ -168,7 +168,7 @@ class DeliveryFeeCalculator:
     def calculate_delivery_fee(self, parameters_dict: dict) -> int | float:
         '''Calculates delivery fee based on parameters in the parameters_dict.'''
 
-        # dict key: function for calculating delivery fee
+        # dict key: function for modifying delivery fee
         # dict value: name of key in parameters_dict whose value to use as argument
         delivery_fee_functions = {
             self.add_delivery_distance_fee: 'delivery_distance',
