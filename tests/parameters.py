@@ -62,6 +62,34 @@ delivery_fee_post_test_parameters = [
         },
         HTTPStatus.BAD_REQUEST
     ),
+    ( # test request containing zeroes
+        {
+            "cart_value": 0, # zero not allowed
+            "delivery_distance": 0, # zero not allowed
+            "number_of_items": 0, # zero not allowed
+            "time": "2024-01-19T15:10:00Z" # multiply fee by 1.2
+        },
+        {
+            'message': 'Validation errors', 'errors': {
+                'cart_value': ['Value must be greater than 0.'],
+                'delivery_distance': ['Value must be greater than 0.'], 
+                'number_of_items': ['Value must be greater than 0.']
+            }
+        },
+        HTTPStatus.BAD_REQUEST
+    ),
+    ( # test rounding delivery fee
+        {
+            "cart_value": 1, # 10€ - 0.01€ = 9.99€ surcharge
+            "delivery_distance": 1, # 2€
+            "number_of_items": 1, # 0€ surcharge
+            "time": "2024-01-19T15:10:00Z" # multiply fee by 1.2: 1199c * 1.2 = 1438,8c
+        },
+        {
+            "delivery_fee": 1439
+        },
+        HTTPStatus.OK
+    ),
     ( # test time missing some of the timestamp data
         {
             "cart_value": 1000, # 0€ surcharge
