@@ -209,12 +209,12 @@ delivery_fee_post_test_parameters = [
     ( # test number_of_items surcharge
         {
             "cart_value": 1000, # 0€ surcharge
-            "delivery_distance": 1000, # 2€
+            "delivery_distance": 1001, # 2€ + 1€ = 3€
             "number_of_items": 8, # 4 * 0.50€ = 2€ surcharge
             "time": "2024-01-15T13:00:00Z" # 0€ surcharge
         },
         {
-            "delivery_fee": 400
+            "delivery_fee": 500
         },
         HTTPStatus.OK
     ),
@@ -344,6 +344,18 @@ delivery_fee_post_test_parameters = [
             "delivery_distance": 3000, # 2€ + 4€ = 6€
             "number_of_items": 13, # 9 * 0.50€ + 1.20€ = 5.70€ surcharge
             "time": "2024-01-19T15:10:00Z" # multiply fee by 1.2
+        },
+        {
+            "delivery_fee": 0 # cart >= 200€, delivery free of charge
+        },
+        HTTPStatus.OK
+    ),
+    ( # test with cart value exceeding the free delivery limit
+        {
+            "cart_value": 25000, # 0€ surcharge
+            "delivery_distance": 3000, # 2€ + 4€ = 6€
+            "number_of_items": 13, # 9 * 0.50€ + 1.20€ = 5.70€ surcharge
+            "time": "2024-01-20T15:10:00Z" # 0€ surcharge
         },
         {
             "delivery_fee": 0 # cart >= 200€, delivery free of charge
