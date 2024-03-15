@@ -117,6 +117,4 @@ pipreqs --force
 
 Henna Lehtinen
 
-henna.lehtinen91@gmail.com
-
-https://www.linkedin.com/in/henna-lehtinen/
+https://github.com/LehtinenHenna
